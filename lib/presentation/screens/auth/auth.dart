@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:node_bb_application/presentation/widgets/TextFeild.dart';
-Widget build(BuildContext context) {
+import 'package:node_bb_application/presentation/screens/home_page.dart';
+
+class AuthenticationPage extends StatelessWidget {
+  static const id = 'Auth Page';
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController regEditor = TextEditingController();
+  final TextEditingController passEditor = TextEditingController();
+
+  AuthenticationPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -16,6 +26,7 @@ Widget build(BuildContext context) {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // TODO 4: change the logo to app logo
                       Image.asset(
                         'assets/images/nitk_logo.png',
                         height: 150,
@@ -35,6 +46,7 @@ Widget build(BuildContext context) {
                       ),
                       const SizedBox(width: 20),
                       const Text(
+                        // TODO 5: change the IRIS to other tag line
                         "IRIS",
                         style: TextStyle(
                             fontWeight: FontWeight.w100, fontSize: 50, fontFamily: 'CormorantGaramond-LightItalic.ttf'),
@@ -43,20 +55,70 @@ Widget build(BuildContext context) {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text('Sign In to your IRIS account'),
+                const Text('Login with Registration Number'),
                 const SizedBox(height: 10),
               ],
             ),
-            CTextField(
-              title: "Reg No/Email",
-              icon: Icons.person,
-              isPassword: false,
+            Padding(
+              padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: regEditor,
+                decoration: InputDecoration(
+                  // icon: Icon(icon),
+                  border: const OutlineInputBorder().copyWith(
+                    borderSide: const BorderSide(
+                      width: 2,
+                      style: BorderStyle.solid,
+                      color: Color(0xffdfdfde),
+                    ),
+                  ),
+                  focusedBorder: const OutlineInputBorder().copyWith(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  labelText: 'Reg No./Email',
+                  labelStyle: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                  hintStyle: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 10),
-            CTextField(
-              title: "Password",
-              icon: Icons.security,
-              isPassword: true,
+            Padding(
+              padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+              child: TextFormField(
+                keyboardType: TextInputType.visiblePassword,
+                controller: passEditor,
+                decoration: InputDecoration(
+                  // icon: Icon(icon),
+                  border: const OutlineInputBorder().copyWith(
+                    borderSide: const BorderSide(
+                      width: 2,
+                      style: BorderStyle.solid,
+                      color: Color(0xffdfdfde),
+                    ),
+                  ),
+                  focusedBorder: const OutlineInputBorder().copyWith(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  labelText: 'Password',
+                  labelStyle: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                  hintStyle: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 15),
             Padding(
@@ -69,8 +131,8 @@ Widget build(BuildContext context) {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
                 onPressed: () {
-                  // BlocProvider.of<AuthBloc>(context).add(LoadingAuthEvent());
                   // entering into the homeScreen
+                  // TODO 2: add remove tripListPage.id from comments
                   Navigator.pushNamed(context, HomePage.id);
                 },
                 child: const Padding(
@@ -115,26 +177,36 @@ Widget build(BuildContext context) {
                           ),
                         ],
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/google_logo.png',
-                              height: 25,
-                              width: 25,
-                            ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'Sign In with Google',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // TODO 3: remove the comments from block listener attached to login using google
+                      // BlocListener<AuthBloc, AuthState>(
+                      //   listener: (context,state){
+                      //     if(state is GoogleAuthenticationComplete){
+                      //       Navigator.pushNamed()
+                      //     }
+                      //   },
+                      //   child: ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                      //     onPressed: () {
+                      //       BlocProvider.of<AuthBloc>(context).add(GoogleAuthenticationEvent());
+                      //     },
+                      //     child: Row(
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: [
+                      //         Image.asset(
+                      //           'assets/images/google_logo.png',
+                      //           height: 25,
+                      //           width: 25,
+                      //         ),
+                      //         const SizedBox(width: 10),
+                      //         const Text(
+                      //           'Sign In with Google',
+                      //           style: TextStyle(color: Colors.black),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   )
                 : const SizedBox(width: 5),

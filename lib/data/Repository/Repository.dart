@@ -3,15 +3,19 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthRepository {
-  final baseurl = 'https://community.nodebb.org/api/login';
-  var client = http.Client();
+  String baseurl = 'https://community.nodebb.org';
+  String path = '/api/v3/utilities/login';
 
-  Future<void> getAuthenticationDetails() async {
-    Uri uri = Uri.https(baseurl);
-    final response = await client.get(uri);
+  Future getAuthenticationDetails() async {
+    Map<String, String> user = {"username": "krishnakumar72480@gmail.com", "password": "krishnakumar939472480"};
+    Uri uri = Uri.https(baseurl, path, user);
+    http.Response response = await http.get(uri);
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      print(json.toString());
+      print("yes achieved");
+      String data = jsonDecode(response.body);
+      return data;
+    } else {
+      print(response.statusCode);
     }
   }
 }

@@ -24,13 +24,42 @@ class HomePage extends StatelessWidget {
       drawer: Drawer(
         width: MediaQuery.of(context).size.width * (0.7),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 40),
-            Image.asset('assets/images/nitk_logo.png'),
-            const InkWell(child: ListTile(leading: IconsArt(Icons.home), title: Text('Home'))),
-            const InkWell(child: ListTile(leading: IconsArt(Icons.mark_chat_unread_outlined), title: Text('Unread'))),
-            const InkWell(child: ListTile(leading: IconsArt(Icons.access_time), title: Text('Recent'))),
-            const InkWell(child: ListTile(leading: IconsArt(Icons.discount), title: Text('Tags'))),
+            const SizedBox(height: 60),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * (0.40),
+              height: MediaQuery.of(context).size.width * (0.40),
+              child: Image.asset('assets/images/nitk_logo.png'),
+            ),
+            const InkWell(
+                child: ListTile(
+                    leading: IconsArt(Icons.home),
+                    title: Text(
+                      'Home',
+                      style: TextStyle(fontSize: 16),
+                    ))),
+            const InkWell(
+                child: ListTile(
+                    leading: IconsArt(Icons.mark_chat_unread_outlined),
+                    title: Text(
+                      'Unread',
+                      style: TextStyle(fontSize: 16),
+                    ))),
+            const InkWell(
+                child: ListTile(
+                    leading: IconsArt(Icons.access_time),
+                    title: Text(
+                      'Recent',
+                      style: TextStyle(fontSize: 16),
+                    ))),
+            const InkWell(
+                child: ListTile(
+                    leading: IconsArt(Icons.discount),
+                    title: Text(
+                      'Tags',
+                      style: TextStyle(fontSize: 16),
+                    ))),
             const InkWell(
                 child: ListTile(leading: IconsArt(Icons.local_fire_department_sharp), title: Text('Popular'))),
             const InkWell(child: ListTile(leading: IconsArt(Icons.person), title: Text('User'))),
