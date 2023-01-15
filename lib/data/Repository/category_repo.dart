@@ -14,6 +14,8 @@ class CategoryRepo {
       var data = response.body;
       Map<String, dynamic> map = jsonDecode(data);
       print("${map["categories"][id + 2]["name"]}");
+      print("${map["categories"][id + 2]["description"]}");
+      print("${map["categories"][id + 2]["teaser"]["timestampISO"]}");
     } else {
       print(response.statusCode);
     }
