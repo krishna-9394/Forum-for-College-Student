@@ -6,18 +6,18 @@ class CategoryRepo {
   String baseurl = 'https://community.nodebb.org/api/';
   var client = http.Client();
 
-  Future getCategories(int id) async {
+  Future getCategories() async {
     String path = "categories";
     Uri uri = Uri.parse(baseurl + path);
     http.Response response = await client.get(uri);
     if (response.statusCode == 200) {
       var data = response.body;
       Map<String, dynamic> map = jsonDecode(data);
-      print("${map["categories"][id + 2]["name"]}");
-      print("${map["categories"][id + 2]["description"]}");
-      print("${map["categories"][id + 2]["teaser"]["timestampISO"]}");
+      return map;
     } else {
       print(response.statusCode);
+      Map<String, dynamic> map = [] as Map<String, dynamic>;
+      return map;
     }
   }
 }
