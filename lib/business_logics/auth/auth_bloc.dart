@@ -6,15 +6,12 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  late AuthRepository _authRepo;
+  final AuthRepository _authRepo = AuthRepository();
 
-  AuthBloc() : super(InitialLoginState()) {
+  AuthBloc() : super(LoggingInState()) {
     on<LoadingAuthEvent>((event, emit) {
-      emit(LoadingLoginsState());
       try {
-        _authRepo = AuthRepository();
         _authRepo.getAuthenticationDetails();
-        emit(LoadedLoginState());
       } catch (error) {
         emit(FailedToLoginState(error: error as Error));
       }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:node_bb_application/presentation/screens/auth/auth.dart';
-import 'package:node_bb_application/presentation/screens/categories.dart';
 import 'package:node_bb_application/presentation/screens/users_page.dart';
-import 'package:node_bb_application/presentation/widgets/drawer_button.dart';
+import 'package:node_bb_application/presentation/widgets/categories_tile.dart';
 
-import '../widgets/categories_tile.dart';
-import 'group_page.dart';
+import '../widgets/drawer_button.dart';
+import 'auth/auth.dart';
+import 'categories.dart';
+import 'home_page.dart';
 
-class HomePage extends StatelessWidget {
-  static const id = 'Home Page';
+class Groups extends StatelessWidget {
+  static const String id = "group_page";
 
-  const HomePage({Key? key}) : super(key: key);
+  const Groups({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +26,23 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text("Category"),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return const Catergory_Tile();
-              },
+      body: SingleChildScrollView(
+          child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        height: size.height * 0.8,
+        child: Column(
+          children: const [
+            Text(
+              "Groups",
+              style: TextStyle(),
             ),
-          ),
-        ],
-      ),
+            Catergory_Tile(),
+            Catergory_Tile(),
+            Catergory_Tile(),
+            Catergory_Tile(),
+          ],
+        ),
+      )),
       drawer: Drawer(
         backgroundColor: Colors.grey.shade800,
         width: size.width * (0.7),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:node_bb_application/data/Repository/Repository.dart';
 import 'package:node_bb_application/presentation/screens/home_page.dart';
 
 class AuthenticationPage extends StatelessWidget {
@@ -6,6 +7,7 @@ class AuthenticationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController regEditor = TextEditingController();
   final TextEditingController passEditor = TextEditingController();
+  AuthRepository auth = AuthRepository();
 
   AuthenticationPage({super.key});
 
@@ -130,9 +132,11 @@ class AuthenticationPage extends StatelessWidget {
               ),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
-                onPressed: () {
+                onPressed: () async {
                   // entering into the homeScreen
                   // TODO 2: add remove tripListPage.id from comments
+                  // await auth.createUser();
+                  // await auth.getAuthenticationDetails();
                   Navigator.pushNamed(context, HomePage.id);
                 },
                 child: const Padding(
@@ -157,26 +161,27 @@ class AuthenticationPage extends StatelessWidget {
                           style: TextStyle(decoration: TextDecoration.underline, color: Theme.of(context).primaryColor),
                         ),
                       ),
-                      Stack(
-                        alignment: AlignmentDirectional.center,
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 2,
-                            decoration: const BoxDecoration(
-                                border: Border.fromBorderSide(BorderSide(
-                              width: 1,
-                            ))),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            child: Text(
-                              'OR',
-                              style: TextStyle(backgroundColor: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // TODO 4
+                      // Stack(
+                      //   alignment: AlignmentDirectional.center,
+                      //   children: [
+                      //     Container(
+                      //       width: 40,
+                      //       height: 2,
+                      //       decoration: const BoxDecoration(
+                      //           border: Border.fromBorderSide(BorderSide(
+                      //         width: 1,
+                      //       ))),
+                      //     ),
+                      //     const Padding(
+                      //       padding: EdgeInsets.only(left: 10, right: 10),
+                      //       child: Text(
+                      //         'OR',
+                      //         style: TextStyle(backgroundColor: Colors.white),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       // TODO 3: remove the comments from block listener attached to login using google
                       // BlocListener<AuthBloc, AuthState>(
                       //   listener: (context,state){

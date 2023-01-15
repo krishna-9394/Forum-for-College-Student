@@ -3,7 +3,10 @@
 // import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:node_bb_application/presentation/screens/auth/auth.dart';
+import 'package:node_bb_application/presentation/screens/categories.dart';
+import 'package:node_bb_application/presentation/screens/group_page.dart';
 import 'package:node_bb_application/presentation/screens/home_page.dart';
+import 'package:node_bb_application/presentation/screens/users_page.dart';
 
 void main() async {
   // TODO 1: how to initialize the hive and firebase while showing the splash screen
@@ -33,11 +36,17 @@ class MyApp extends StatelessWidget {
       title: 'Node BB Forum',
       // the list of routes in which user will traverse
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Colors.deepPurpleAccent,
+          secondary: const Color(0xFFFFC107),
+        ),
       ),
       routes: {
         HomePage.id: (context) => const HomePage(),
         AuthenticationPage.id: (context) => AuthenticationPage(),
+        Category.id: (context) => Category(),
+        Users.id: (context) => const Users(),
+        Groups.id: (context) => const Groups(),
       },
       home: AuthenticationPage(),
     );

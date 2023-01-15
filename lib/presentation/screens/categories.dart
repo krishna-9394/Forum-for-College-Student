@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:node_bb_application/presentation/screens/auth/auth.dart';
-import 'package:node_bb_application/presentation/screens/categories.dart';
 import 'package:node_bb_application/presentation/screens/users_page.dart';
-import 'package:node_bb_application/presentation/widgets/drawer_button.dart';
+import 'package:node_bb_application/presentation/widgets/categories_tile.dart';
 
-import '../widgets/categories_tile.dart';
+import '../../data/Repository/category_repo.dart';
+import '../widgets/drawer_button.dart';
+import 'auth/auth.dart';
 import 'group_page.dart';
+import 'home_page.dart';
 
-class HomePage extends StatelessWidget {
-  static const id = 'Home Page';
+class Category extends StatelessWidget {
+  CategoryRepo repo = CategoryRepo();
+  static const String id = "category_page";
 
-  const HomePage({Key? key}) : super(key: key);
+  Category({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +37,9 @@ class HomePage extends StatelessWidget {
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: 3,
               itemBuilder: (context, index) {
+                repo.getCategories(index + 1);
                 return const Catergory_Tile();
               },
             ),
