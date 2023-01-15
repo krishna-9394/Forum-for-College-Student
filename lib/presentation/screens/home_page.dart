@@ -81,12 +81,12 @@ class HomePage extends StatelessWidget {
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: 20,
+                    itemCount: 7,
                     itemBuilder: (context, index) {
-                      String time = map["categories"][index + 1]["teaser"]["timestamp"];
+                      String time = map["categories"][index]["teaser"]["timestamp"];
                       return Catergory_Tile(
-                          title: map["categories"][index + 1]["name"],
-                          description: map["categories"][index + 1]["description"],
+                          title: map["categories"][index]["name"],
+                          description: map["categories"][index]["description"],
                           time: time,
                           size: size);
                     },
