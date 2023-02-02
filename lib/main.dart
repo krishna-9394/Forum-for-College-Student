@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:node_bb_application/business_logics/category/category_bloc.dart';
 import 'package:node_bb_application/presentation/screens/auth/auth.dart';
-import 'package:node_bb_application/presentation/screens/categories.dart';
+import 'package:node_bb_application/presentation/screens/category_list.dart';
 import 'package:node_bb_application/presentation/screens/group_page.dart';
 import 'package:node_bb_application/presentation/screens/home_page.dart';
 import 'package:node_bb_application/presentation/screens/users_page.dart';
@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
           routes: {
             HomePage.id: (context) => const HomePage(),
             AuthenticationPage.id: (context) => AuthenticationPage(),
-            Category.id: (context) => Category(),
-            Users.id: (context) => const Users(),
+            CategoryList.id: (context) => CategoryList(),
+            UsersList.id: (context) => const UsersList(),
             Groups.id: (context) => const Groups(),
           },
           home: AuthenticationPage(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:node_bb_application/data/Repository/Repository.dart';
-import 'package:node_bb_application/presentation/screens/home_page.dart';
+
+import '../category_list.dart';
 
 class AuthenticationPage extends StatelessWidget {
   static const id = 'Auth Page';
@@ -137,7 +138,7 @@ class AuthenticationPage extends StatelessWidget {
                   // TODO 2: add remove tripListPage.id from comments
                   // await auth.createUser();
                   // await auth.getAuthenticationDetails();
-                  Navigator.pushNamed(context, HomePage.id);
+                  Navigator.pushNamed(context, CategoryList.id);
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 15),

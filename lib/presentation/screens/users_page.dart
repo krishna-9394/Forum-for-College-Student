@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:node_bb_application/presentation/widgets/users_tile.dart';
 
-import '../../business_logics/category/category_bloc.dart';
-import '../widgets/categories_tile.dart';
+import '../../business_logics/users/users_bloc.dart';
 import '../widgets/drawer_button.dart';
 import 'auth/auth.dart';
-import 'categories.dart';
+import 'category_list.dart';
 import 'group_page.dart';
 import 'home_page.dart';
 
-class Users extends StatelessWidget {
+class UsersList extends StatelessWidget {
   static const String id = "users_page";
 
-  const Users({Key? key}) : super(key: key);
+  const UsersList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => CategoryBloc()..add(LoadCategories()),
-      child: BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
-        if (state is LoadingCategoryData) {
+      create: (context) => UsersBloc()..add(LoadingUsers()),
+      child: BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
+        if (state is LoadingUsersData) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Category"),
+              title: const Text("Users"),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
@@ -48,22 +48,22 @@ class Users extends StatelessWidget {
                   //   height: MediaQuery.of(context).size.width * (0.40),
                   //   child: Image.asset('assets/images/nitk_logo.png'),
                   // ),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),
             ),
           );
-        } else if (state is LoadedCategoryData) {
-          Map<String, dynamic> map = state.map;
+        } else if (state is LoadedUsersData) {
+          List<dynamic> map = state.map;
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Category"),
+              title: const Text("Users"),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
@@ -83,12 +83,23 @@ class Users extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: 3,
                     itemBuilder: (context, index) {
-                      String time = map["categories"][index + 1]["teaser"]["timestamp"];
-                      return Catergory_Tile(
-                          title: map["categories"][index + 1]["name"],
-                          description: map["categories"][index + 1]["description"],
-                          time: time,
-                          size: size);
+                      String name = map[index]["username"];
+                      String picture = map[index]["picture"];
+                      picture ??= "";
+                      String logo = map[index]["icon:text"];
+                      String bgColor = map[index]["icon:bgColor"];
+                      String status = map[index]["status"];
+                      int uid = map[index]["uid"];
+                      String timestamp = map[index]["lastonlineISO"];
+                      return UsersTile(
+                        uid: uid,
+                        bgColor: bgColor,
+                        name: name,
+                        picture: picture,
+                        status: status,
+                        logo: logo,
+                        timestamp: timestamp,
+                      );
                     },
                   ),
                 ),
@@ -101,21 +112,21 @@ class Users extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * 0.040),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),
             ),
           );
-        } else if (state is FailedToLoadData) {
+        } else if (state is FailedToLoadUsersData) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Category"),
+              title: const Text("Users"),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
@@ -135,12 +146,12 @@ class Users extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * 0.040),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),
@@ -169,12 +180,12 @@ class Users extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * 0.040),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),

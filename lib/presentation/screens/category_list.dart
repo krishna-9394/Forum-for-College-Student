@@ -10,11 +10,11 @@ import 'auth/auth.dart';
 import 'group_page.dart';
 import 'home_page.dart';
 
-class Category extends StatelessWidget {
+class CategoryList extends StatelessWidget {
   CategoryRepo repo = CategoryRepo();
   static const String id = "category_page";
 
-  Category({Key? key}) : super(key: key);
+  CategoryList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +50,19 @@ class Category extends StatelessWidget {
                   //   height: MediaQuery.of(context).size.width * (0.40),
                   //   child: Image.asset('assets/images/nitk_logo.png'),
                   // ),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),
             ),
           );
         } else if (state is LoadedCategoryData) {
-          Map<String, dynamic> map = state.map;
+          List<dynamic> map = state.map["categories"];
           return Scaffold(
             appBar: AppBar(
               title: const Text("Category"),
@@ -83,14 +83,24 @@ class Category extends StatelessWidget {
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: 7,
+                    itemCount: map.length,
                     itemBuilder: (context, index) {
-                      String time = map["categories"][index]["teaser"]["timestampISO"];
+                      //TODO handle time and date according to the time difference
+                      String timestamp = map[index]["teaser"]["timestampISO"];
+                      String date = "2023-01-31";
+                      String time = "19:21";
+                      String color = map[index]["bgColor"];
+                      int cid = map[index]["cid"];
+                      color = color.substring(1);
+                      color = "0xff$color";
                       return Catergory_Tile(
-                          title: map["categories"][index]["name"],
-                          description: map["categories"][index]["description"],
-                          time: time,
-                          size: size);
+                        cid: cid,
+                        title: map[index]["name"],
+                        description: map[index]["description"],
+                        time: date,
+                        size: size,
+                        color: color,
+                      );
                     },
                   ),
                 ),
@@ -108,12 +118,12 @@ class Category extends StatelessWidget {
                   //   height: MediaQuery.of(context).size.width * (0.40),
                   //   child: Image.asset('assets/images/nitk_logo.png'),
                   // ),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),
@@ -142,12 +152,12 @@ class Category extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * 0.040),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),
@@ -181,12 +191,12 @@ class Category extends StatelessWidget {
                   //   height: MediaQuery.of(context).size.width * (0.40),
                   //   child: Image.asset('assets/images/nitk_logo.png'),
                   // ),
-                  const DrawerButton(title: 'Categories', call: Category.id, data: Icons.home),
+                  const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
                   const DrawerButton(title: 'Tags', call: HomePage.id, data: Icons.discount),
                   const DrawerButton(title: 'Popular', call: HomePage.id, data: Icons.local_fire_department_sharp),
-                  const DrawerButton(title: 'User', call: Users.id, data: Icons.person),
+                  const DrawerButton(title: 'User', call: UsersList.id, data: Icons.person),
                   const DrawerButton(title: 'Groups', call: Groups.id, data: Icons.group),
                 ],
               ),
