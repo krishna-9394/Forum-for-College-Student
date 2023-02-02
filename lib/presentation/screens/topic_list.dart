@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:node_bb_application/presentation/widgets/users_tile.dart';
+import 'package:node_bb_application/business_logics/topics/topics_bloc.dart';
+import 'package:node_bb_application/data/Repository/topics_repo.dart';
+import 'package:node_bb_application/presentation/screens/users_page.dart';
 
-import '../../business_logics/users/users_bloc.dart';
 import '../widgets/drawer_button.dart';
+import '../widgets/topics_tile.dart';
 import 'auth/auth.dart';
 import 'category_list.dart';
 import 'group_page.dart';
 import 'home_page.dart';
 
-class UsersList extends StatelessWidget {
-  static const String id = "users_page";
+class TopicsList extends StatelessWidget {
+  final int cid;
+  final String title;
 
-  const UsersList({Key? key}) : super(key: key);
+  TopicRepo repo = TopicRepo();
+
+  TopicsList({Key? key, required this.cid, required this.title}) : super(key: key);
+  static const String id = "topic_list_page";
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) =>
-      UsersBloc()
-        ..add(LoadingUsers()),
-      child: BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
-        if (state is LoadingUsersData) {
+      create: (context) => TopicsBloc()..add(LoadingTopics(cid)),
+      child: BlocBuilder<TopicsBloc, TopicsState>(builder: (context, state) {
+        if (state is LoadingTopicsData) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Users"),
+              title: Text("Home / $title / Topics"),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
@@ -63,11 +65,11 @@ class UsersList extends StatelessWidget {
               ),
             ),
           );
-        } else if (state is LoadedUsersData) {
+        } else if (state is LoadedTopicsData) {
           List<dynamic> map = state.map;
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Users"),
+              title: Text(title),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
@@ -87,25 +89,26 @@ class UsersList extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: map.length,
                     itemBuilder: (context, index) {
-                      String name = map[index]["username"];
-                      String? picture = map[index]["picture"];
-                      picture ??= "";
-                      if (picture.contains("assets")) picture = "";
-                      String logo = map[index]["icon:text"];
-                      String bgColor = map[index]["icon:bgColor"];
-                      bgColor = bgColor.substring(1);
-                      bgColor = "0xff$bgColor";
-                      String status = map[index]["status"];
-                      int uid = map[index]["uid"];
-                      String timestamp = map[index]["lastonlineISO"];
-                      return UsersTile(
-                        uid: uid,
-                        bgColor: bgColor,
-                        name: name,
-                        picture: picture,
-                        status: status,
-                        logo: logo,
-                        timestamp: timestamp,
+                      //TODO handle time and date according to the time difference
+                      String timestamp = map[index]["timestampISO"];
+                      String title = map[index]["title"];
+                      int votecount = map[index]["votes"];
+                      int postcount = map[index]["postcount"];
+                      int viewcount = map[index]["viewcount"];
+                      String date = timestamp.substring(0, 10);
+                      String time = timestamp.substring(11, 16);
+                      // TODO  Handle timing part here
+                      // String color =map[index]["bgColor"];
+                      // int cid = map[index]["cid"];
+                      // color = color.substring(1);
+                      // color = "0xff$color";
+                      return Topics_Tile(
+                        size: size,
+                        title: title,
+                        time: time,
+                        count1: votecount,
+                        count2: postcount,
+                        count3: viewcount,
                       );
                     },
                   ),
@@ -119,6 +122,11 @@ class UsersList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * 0.040),
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width * (0.40),
+                  //   height: MediaQuery.of(context).size.width * (0.40),
+                  //   child: Image.asset('assets/images/nitk_logo.png'),
+                  // ),
                   const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
@@ -130,10 +138,10 @@ class UsersList extends StatelessWidget {
               ),
             ),
           );
-        } else if (state is FailedToLoadUsersData) {
+        } else if (state is FailedToLoadTopicsData) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Users"),
+              title: const Text("Category"),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
@@ -187,6 +195,11 @@ class UsersList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * 0.040),
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width * (0.40),
+                  //   height: MediaQuery.of(context).size.width * (0.40),
+                  //   child: Image.asset('assets/images/nitk_logo.png'),
+                  // ),
                   const DrawerButton(title: 'Categories', call: CategoryList.id, data: Icons.home),
                   const DrawerButton(title: 'Unread', call: HomePage.id, data: Icons.mark_chat_unread_outlined),
                   const DrawerButton(title: 'Recent', call: HomePage.id, data: Icons.access_time),
