@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:node_bb_application/presentation/screens/auth/login_page.dart';
 import 'package:node_bb_application/presentation/screens/users_page.dart';
 import 'package:node_bb_application/presentation/widgets/categories_tile.dart';
 
 import '../../business_logics/category/category_bloc.dart';
 import '../widgets/drawer_button.dart';
-import 'auth/auth.dart';
 import 'category_list.dart';
 import 'home_page.dart';
 
@@ -28,7 +28,7 @@ class Groups extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -68,7 +68,7 @@ class Groups extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -132,7 +132,7 @@ class Groups extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -166,7 +166,7 @@ class Groups extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],

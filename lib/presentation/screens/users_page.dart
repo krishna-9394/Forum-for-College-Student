@@ -4,7 +4,7 @@ import 'package:node_bb_application/presentation/widgets/users_tile.dart';
 
 import '../../business_logics/users/users_bloc.dart';
 import '../widgets/drawer_button.dart';
-import 'auth/auth.dart';
+import 'auth/login_page.dart';
 import 'category_list.dart';
 import 'group_page.dart';
 import 'home_page.dart';
@@ -16,13 +16,9 @@ class UsersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) =>
-      UsersBloc()
-        ..add(LoadingUsers()),
+      create: (context) => UsersBloc()..add(LoadingUsers()),
       child: BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
         if (state is LoadingUsersData) {
           return Scaffold(
@@ -32,7 +28,7 @@ class UsersList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -72,7 +68,7 @@ class UsersList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -83,32 +79,38 @@ class UsersList extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: map.length,
-                    itemBuilder: (context, index) {
-                      String name = map[index]["username"];
-                      String? picture = map[index]["picture"];
-                      picture ??= "";
-                      if (picture.contains("assets")) picture = "";
-                      String logo = map[index]["icon:text"];
-                      String bgColor = map[index]["icon:bgColor"];
-                      bgColor = bgColor.substring(1);
-                      bgColor = "0xff$bgColor";
-                      String status = map[index]["status"];
-                      int uid = map[index]["uid"];
-                      String timestamp = map[index]["lastonlineISO"];
-                      return UsersTile(
-                        uid: uid,
-                        bgColor: bgColor,
-                        name: name,
-                        picture: picture,
-                        status: status,
-                        logo: logo,
-                        timestamp: timestamp,
-                      );
-                    },
-                  ),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: map.length,
+                      itemBuilder: (context, index) {
+                        String name = map[index]["username"];
+                        String? picture = map[index]["picture"];
+                        picture ??= "";
+                        if (picture.contains("assets")) picture = "";
+                        String logo = map[index]["icon:text"];
+                        String bgColor = map[index]["icon:bgColor"];
+                        bgColor = bgColor.substring(1);
+                        bgColor = "0xff$bgColor";
+                        String status = map[index]["status"];
+                        int uid = map[index]["uid"];
+                        final DateTime timestamp = DateTime.fromMillisecondsSinceEpoch(map[index]["lastonline"]);
+                        final DateTime now = DateTime.now();
+                        int difference = now.difference(timestamp).inHours;
+                        String lastonline = "$difference hours ago";
+                        if (difference > 23) {
+                          difference = now.difference(timestamp).inDays;
+                          lastonline = "$difference days ago";
+                        }
+                        return UsersTile(
+                          uid: uid,
+                          bgColor: bgColor,
+                          name: name,
+                          picture: picture,
+                          status: status,
+                          logo: logo,
+                          timestamp: lastonline,
+                        );
+                      }),
                 ),
               ],
             ),
@@ -138,7 +140,7 @@ class UsersList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -172,7 +174,7 @@ class UsersList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],

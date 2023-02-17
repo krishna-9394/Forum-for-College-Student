@@ -29,3 +29,26 @@ class FailedToLoadUsersData extends UsersState {
   @override
   List<Object?> get props => [error];
 }
+
+class LoadedSingleUsersData extends UsersState {
+  final dynamic object;
+
+  LoadedSingleUsersData(this.object);
+
+  @override
+  List<Object?> get props => [object];
+}
+
+class LoadingSingleUsersData extends UsersState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FailedToLoadSingleUsersData extends UsersState {
+  final String error;
+
+  FailedToLoadSingleUsersData(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

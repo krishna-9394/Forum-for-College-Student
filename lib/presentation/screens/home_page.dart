@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:node_bb_application/presentation/screens/auth/auth.dart';
 import 'package:node_bb_application/presentation/screens/category_list.dart';
 import 'package:node_bb_application/presentation/screens/users_page.dart';
 import 'package:node_bb_application/presentation/widgets/drawer_button.dart';
 
 import '../../business_logics/category/category_bloc.dart';
 import '../widgets/categories_tile.dart';
+import 'auth/login_page.dart';
 import 'group_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -134,7 +134,7 @@ class HomePage extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -168,7 +168,7 @@ class HomePage extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],

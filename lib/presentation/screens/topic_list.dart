@@ -6,7 +6,7 @@ import 'package:node_bb_application/presentation/screens/users_page.dart';
 
 import '../widgets/drawer_button.dart';
 import '../widgets/topics_tile.dart';
-import 'auth/auth.dart';
+import 'auth/login_page.dart';
 import 'category_list.dart';
 import 'group_page.dart';
 import 'home_page.dart';
@@ -19,6 +19,25 @@ class TopicsList extends StatelessWidget {
 
   TopicsList({Key? key, required this.cid, required this.title}) : super(key: key);
   static const String id = "topic_list_page";
+
+  String DateTimeInterconversion(String timestamp) {
+    String yyyy = timestamp.substring(0, 4);
+    String mm = timestamp.substring(5, 7);
+    String dd = timestamp.substring(8, 10);
+    String hour = timestamp.substring(11, 13);
+    String min = timestamp.substring(14, 16);
+    String second = timestamp.substring(17, 19);
+    final moonLanding =
+        DateTime.utc(int.parse(yyyy), int.parse(mm), int.parse(dd), int.parse(hour), int.parse(min), int.parse(second));
+    final DateTime now = DateTime.now();
+    int difference = now.difference(moonLanding).inHours;
+    String lastonline = "$difference hours ago";
+    if (difference > 23) {
+      difference = now.difference(moonLanding).inDays;
+      lastonline = "$difference days ago";
+    }
+    return lastonline;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +53,7 @@ class TopicsList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -74,46 +93,42 @@ class TopicsList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
             ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: map.length,
-                    itemBuilder: (context, index) {
-                      //TODO handle time and date according to the time difference
-                      String timestamp = map[index]["timestampISO"];
-                      String title = map[index]["title"];
-                      int votecount = map[index]["votes"];
-                      int postcount = map[index]["postcount"];
-                      int viewcount = map[index]["viewcount"];
-                      String date = timestamp.substring(0, 10);
-                      String time = timestamp.substring(11, 16);
-                      // TODO  Handle timing part here
-                      // String color =map[index]["bgColor"];
-                      // int cid = map[index]["cid"];
-                      // color = color.substring(1);
-                      // color = "0xff$color";
-                      return Topics_Tile(
-                        size: size,
-                        title: title,
-                        time: time,
-                        count1: votecount,
-                        count2: postcount,
-                        count3: viewcount,
-                      );
-                    },
+            body: Container(
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: map.length,
+                      itemBuilder: (context, index) {
+                        //TODO handle time and date according to the time difference
+                        String timestamp = DateTimeInterconversion(map[index]["timestampISO"]);
+                        String title = map[index]["title"];
+                        int votecount = map[index]["votes"];
+                        int postcount = map[index]["postcount"];
+                        int viewcount = map[index]["viewcount"];
+                        return Topics_Tile(
+                          size: size,
+                          title: title,
+                          time: timestamp,
+                          count1: votecount,
+                          count2: postcount,
+                          count3: viewcount,
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             drawer: Drawer(
               backgroundColor: Colors.grey.shade800,
@@ -146,7 +161,7 @@ class TopicsList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -180,7 +195,7 @@ class TopicsList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],

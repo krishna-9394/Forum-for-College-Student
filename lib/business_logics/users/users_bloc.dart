@@ -14,10 +14,19 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     on<LoadingUsers>((event, emit) async {
       emit(LoadingUsersData());
       try {
-        List<dynamic> map = await repo.getTopics();
+        List<dynamic> map = await repo.getUsers();
         emit(LoadedUsersData(map));
       } catch (e) {
         emit(FailedToLoadUsersData(e.toString()));
+      }
+    });
+    on<LoadingSingleUser>((event, emit) async {
+      emit(LoadingSingleUsersData());
+      try {
+        dynamic object = await repo.getSingleUser(event.uid);
+        emit(LoadedSingleUsersData(object));
+      } catch (e) {
+        emit(FailedToLoadSingleUsersData(e.toString()));
       }
     });
   }

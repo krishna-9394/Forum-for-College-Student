@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthRepository {
-  String baseurl = 'https://community.nodebb.org/api/v3/';
+  // https://community.nodebb.org/api/v3/utilities/login
+  // http:///
+  String baseurl = 'https://krishna72480.nodebb.com/api/v3/';
   var client = http.Client();
 
   Future createUser() async {
-    print("reached here 10");
     String path = "users/";
     Map<String, String> auth = {
       "username": "krishn9345",
@@ -40,5 +41,32 @@ class AuthRepository {
     } else {
       print(response.statusCode);
     }
+  }
+
+  Future getLoginResponse(String username, String password) async {
+    String path = "utilities/login";
+    Uri uri = Uri.parse(baseurl + path);
+    Map<String, String> credentials = {"username": username, "password": password};
+    var body = jsonEncode(credentials);
+    http.Response response = await client.post(uri, body: body);
+    print(response.statusCode);
+  }
+
+  Future getSignUpResponse(String username, String password, String email) async {
+    // http.Response response = await client.post(uri, body: payload);
+    // data = {
+    //   "cid": int(cid),
+    //   "title": entry.title,
+    //   "content": '\n'.join(description),
+    //   "tags": tags
+    // }
+    // headers = {'Authorization': 'Bearer {token}'.format(token=os.environ.get('NODEBB_TOKEN'))}
+    // url = '{host}/api/v3/topics/'.format(host=os.environ.get('NODEBB_URL'))
+    //
+    // response = requests.post(
+    //     url=url,
+    //     headers=headers,
+    //     json=data
+    // )
   }
 }

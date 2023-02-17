@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:node_bb_application/data/Repository/Repository.dart';
+import 'package:node_bb_application/presentation/screens/auth/login_page.dart';
 
 import '../category_list.dart';
 
-class AuthenticationPage extends StatelessWidget {
-  static const id = 'Auth Page';
+class SignUpPage extends StatelessWidget {
+  static const id = 'Sign Up Page';
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController regEditor = TextEditingController();
+  final TextEditingController userEditor = TextEditingController();
+  final TextEditingController emailEditor = TextEditingController();
   final TextEditingController passEditor = TextEditingController();
-  AuthRepository auth = AuthRepository();
 
-  AuthenticationPage({super.key});
+  SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class AuthenticationPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text('Login with Registration Number'),
+                const Text('SignUp'),
                 const SizedBox(height: 10),
               ],
             ),
@@ -66,7 +66,7 @@ class AuthenticationPage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
               child: TextFormField(
                 keyboardType: TextInputType.number,
-                controller: regEditor,
+                controller: emailEditor,
                 decoration: InputDecoration(
                   // icon: Icon(icon),
                   border: const OutlineInputBorder().copyWith(
@@ -82,7 +82,7 @@ class AuthenticationPage extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  labelText: 'Reg No./Email',
+                  labelText: 'email',
                   labelStyle: const TextStyle(
                     color: Colors.black54,
                   ),
@@ -93,6 +93,37 @@ class AuthenticationPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+              child: TextFormField(
+                keyboardType: TextInputType.visiblePassword,
+                controller: userEditor,
+                decoration: InputDecoration(
+                  // icon: Icon(icon),
+                  border: const OutlineInputBorder().copyWith(
+                    borderSide: const BorderSide(
+                      width: 2,
+                      style: BorderStyle.solid,
+                      color: Color(0xffdfdfde),
+                    ),
+                  ),
+                  focusedBorder: const OutlineInputBorder().copyWith(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  labelText: 'username',
+                  labelStyle: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                  hintStyle: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
               child: TextFormField(
@@ -124,30 +155,34 @@ class AuthenticationPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 2.5,
-                bottom: 2.5,
-                left: 20,
-                right: 20,
-              ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
-                onPressed: () async {
-                  // entering into the homeScreen
-                  // TODO 2: add remove tripListPage.id from comments
-                  // await auth.createUser();
-                  // await auth.getAuthenticationDetails();
-                  Navigator.pushNamed(context, CategoryList.id);
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                  child: Text(
-                    "Sign In",
-                  ),
-                ),
-              ),
-            ),
+            MediaQuery.of(context).viewInsets.bottom == 0
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      top: 2.5,
+                      bottom: 2.5,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          side: BorderSide(
+                            width: 1.5,
+                            color: Theme.of(context).primaryColor,
+                          )),
+                      onPressed: () async {
+                        Navigator.pushNamed(context, CategoryList.id);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 15, bottom: 15),
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(height: 5),
             const SizedBox(height: 5),
             MediaQuery.of(context).viewInsets.bottom == 0
                 ? Column(
@@ -155,10 +190,12 @@ class AuthenticationPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, LoginPage.id);
+                        },
                         style: const ButtonStyle(),
                         child: Text(
-                          'Recover Password',
+                          'Already a user? Password',
                           style: TextStyle(decoration: TextDecoration.underline, color: Theme.of(context).primaryColor),
                         ),
                       ),

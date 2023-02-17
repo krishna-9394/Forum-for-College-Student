@@ -6,7 +6,7 @@ import 'package:node_bb_application/presentation/widgets/categories_tile.dart';
 
 import '../../data/Repository/category_repo.dart';
 import '../widgets/drawer_button.dart';
-import 'auth/auth.dart';
+import 'auth/login_page.dart';
 import 'group_page.dart';
 import 'home_page.dart';
 
@@ -15,6 +15,25 @@ class CategoryList extends StatelessWidget {
   static const String id = "category_page";
 
   CategoryList({Key? key}) : super(key: key);
+
+  String DateTimeInterconversion(String timestamp) {
+    String yyyy = timestamp.substring(0, 4);
+    String mm = timestamp.substring(5, 7);
+    String dd = timestamp.substring(8, 10);
+    String hour = timestamp.substring(11, 13);
+    String min = timestamp.substring(14, 16);
+    String second = timestamp.substring(17, 19);
+    final moonLanding =
+        DateTime.utc(int.parse(yyyy), int.parse(mm), int.parse(dd), int.parse(hour), int.parse(min), int.parse(second));
+    final DateTime now = DateTime.now();
+    int difference = now.difference(moonLanding).inHours;
+    String lastonline = "$difference hours ago";
+    if (difference > 23) {
+      difference = now.difference(moonLanding).inDays;
+      lastonline = "$difference days ago";
+    }
+    return lastonline;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +49,7 @@ class CategoryList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -70,41 +89,42 @@ class CategoryList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
             ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: map.length,
-                    itemBuilder: (context, index) {
-                      //TODO handle time and date according to the time difference
-                      String timestamp = map[index]["teaser"]["timestampISO"];
-                      String date = "2023-01-31";
-                      String time = "19:21";
-                      String color = map[index]["bgColor"];
-                      int cid = map[index]["cid"];
-                      color = color.substring(1);
-                      color = "0xff$color";
-                      return Catergory_Tile(
-                        cid: cid,
-                        title: map[index]["name"],
-                        description: map[index]["description"],
-                        time: date,
-                        size: size,
-                        color: color,
-                      );
-                    },
+            body: Container(
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: map.length,
+                      itemBuilder: (context, index) {
+                        //TODO handle time and date according to the time difference
+                        String timestamp = DateTimeInterconversion(map[index]["teaser"]["timestampISO"]);
+                        String color = map[index]["bgColor"];
+                        int cid = map[index]["cid"];
+                        color = color.substring(1);
+                        color = "0xff$color";
+                        return Catergory_Tile(
+                          cid: cid,
+                          title: map[index]["name"],
+                          description: map[index]["description"],
+                          time: timestamp,
+                          size: size,
+                          color: color,
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             drawer: Drawer(
               backgroundColor: Colors.grey.shade800,
@@ -137,7 +157,7 @@ class CategoryList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
@@ -171,7 +191,7 @@ class CategoryList extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.power_settings_new),
                   onPressed: () {
-                    Navigator.pushNamed(context, AuthenticationPage.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                 ),
               ],
