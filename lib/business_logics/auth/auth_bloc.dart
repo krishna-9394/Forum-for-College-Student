@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,19 +11,38 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepo = AuthRepository();
 
-  AuthBloc() : super(LoggingInState()) {
-    on<LoggingIn>((event, emit) {
-      try {
-        _authRepo.getLoginResponse(event.username, event.password);
-      } catch (error) {
-        emit(FailedToLoginState(error: error as Error));
-      }
-    });
-    on<SigningUp>((event, emit) {
-      try {
-        _authRepo.getSignUpResponse(event.username, event.password, event.email);
-      } catch (error) {
-        emit(FailedToSignUpState(error: error as Error));
+  AuthBloc() : super(DataFillingState()) {
+    on<AuthEvent>((event, emit) async {
+      if (event is Login) {
+        emit(LoggingInState());
+        try {
+          var list = await _authRepo.getLoginResponse(event.username, event.password);
+          int statusCode = list[1];
+          if (statusCode == 200) {
+            Map<String, dynamic> data = jsonDecode(list[0]);
+            emit(LoginSuccessState(data["response"]));
+          } else {
+            print("user not found");
+            emit(UserNotFoundState());
+          }
+        } catch (error) {
+          emit(FailedToLoginState(error: error.toString()));
+        }
+      } else if (event is SignUp) {
+        emit(SignUpState());
+        try {
+          var list = await _authRepo.getSignUpResponse(event.username, event.password, event.email);
+          int statusCode = list[1];
+          if (statusCode == 200) {
+            Map<String, dynamic> data = jsonDecode(list[0]);
+            emit(LoginSuccessState(data["response"]));
+          } else {
+            print("user not found");
+            emit(UserNotFoundState());
+          }
+        } catch (error) {
+          emit(FailedToLoginState(error: error.toString()));
+        }
       }
     });
   }

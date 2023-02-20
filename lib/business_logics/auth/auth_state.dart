@@ -2,14 +2,23 @@ part of 'auth_bloc.dart';
 
 abstract class AuthState extends Equatable {}
 
+class DataFillingState extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
 class LoggingInState extends AuthState {
   @override
   List<Object?> get props => [];
 }
 
 class LoginSuccessState extends AuthState {
+  final Map<String, dynamic> map;
+
+  LoginSuccessState(this.map);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [map];
 }
 
 class UserNotFoundState extends AuthState {
@@ -18,7 +27,7 @@ class UserNotFoundState extends AuthState {
 }
 
 class FailedToLoginState extends AuthState {
-  final Error error;
+  final String error;
 
   FailedToLoginState({required this.error});
 

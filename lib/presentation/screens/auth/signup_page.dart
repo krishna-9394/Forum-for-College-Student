@@ -3,20 +3,25 @@ import 'package:node_bb_application/presentation/screens/auth/login_page.dart';
 
 import '../category_list.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   static const id = 'Sign Up Page';
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController userEditor = TextEditingController();
   final TextEditingController emailEditor = TextEditingController();
   final TextEditingController passEditor = TextEditingController();
-
-  SignUpPage({super.key});
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: _formKey,
+        key: widget._formKey,
         child: Column(
           mainAxisAlignment:
               MediaQuery.of(context).viewInsets.bottom != 0 ? MainAxisAlignment.center : MainAxisAlignment.center,
@@ -58,14 +63,19 @@ class SignUpPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text('SignUp'),
+                const Text(
+                  'SignUp',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
                 const SizedBox(height: 10),
               ],
             ),
             Padding(
               padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
               child: TextFormField(
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 controller: emailEditor,
                 decoration: InputDecoration(
                   // icon: Icon(icon),
@@ -82,7 +92,7 @@ class SignUpPage extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  labelText: 'email',
+                  labelText: 'Email',
                   labelStyle: const TextStyle(
                     color: Colors.black54,
                   ),
@@ -98,6 +108,7 @@ class SignUpPage extends StatelessWidget {
               child: TextFormField(
                 keyboardType: TextInputType.visiblePassword,
                 controller: userEditor,
+                obscureText: isVisible == false,
                 decoration: InputDecoration(
                   // icon: Icon(icon),
                   border: const OutlineInputBorder().copyWith(
@@ -113,7 +124,7 @@ class SignUpPage extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  labelText: 'username',
+                  labelText: 'Username',
                   labelStyle: const TextStyle(
                     color: Colors.black54,
                   ),
@@ -126,32 +137,49 @@ class SignUpPage extends StatelessWidget {
             const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
-              child: TextFormField(
-                keyboardType: TextInputType.visiblePassword,
-                controller: passEditor,
-                decoration: InputDecoration(
-                  // icon: Icon(icon),
-                  border: const OutlineInputBorder().copyWith(
-                    borderSide: const BorderSide(
-                      width: 2,
-                      style: BorderStyle.solid,
-                      color: Color(0xffdfdfde),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  TextFormField(
+                    obscureText: !isVisible,
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: passEditor,
+                    decoration: InputDecoration(
+                      // icon: Icon(icon),
+                      border: const OutlineInputBorder().copyWith(
+                        borderSide: const BorderSide(
+                          width: 2,
+                          style: BorderStyle.solid,
+                          color: Color(0xffdfdfde),
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder().copyWith(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      labelText: 'Password',
+                      labelStyle: const TextStyle(
+                        color: Colors.black54,
+                      ),
+                      hintStyle: const TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
-                  focusedBorder: const OutlineInputBorder().copyWith(
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Theme.of(context).primaryColor,
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isVisible = !isVisible;
+                        });
+                      },
+                      icon: isVisible ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
                     ),
                   ),
-                  labelText: 'Password',
-                  labelStyle: const TextStyle(
-                    color: Colors.black54,
-                  ),
-                  hintStyle: const TextStyle(
-                    color: Colors.black54,
-                  ),
-                ),
+                ],
               ),
             ),
             const SizedBox(height: 15),
@@ -195,61 +223,10 @@ class SignUpPage extends StatelessWidget {
                         },
                         style: const ButtonStyle(),
                         child: Text(
-                          'Already a user? Password',
+                          'Already a user? SignUp',
                           style: TextStyle(decoration: TextDecoration.underline, color: Theme.of(context).primaryColor),
                         ),
                       ),
-                      // TODO 4
-                      // Stack(
-                      //   alignment: AlignmentDirectional.center,
-                      //   children: [
-                      //     Container(
-                      //       width: 40,
-                      //       height: 2,
-                      //       decoration: const BoxDecoration(
-                      //           border: Border.fromBorderSide(BorderSide(
-                      //         width: 1,
-                      //       ))),
-                      //     ),
-                      //     const Padding(
-                      //       padding: EdgeInsets.only(left: 10, right: 10),
-                      //       child: Text(
-                      //         'OR',
-                      //         style: TextStyle(backgroundColor: Colors.white),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // TODO 3: remove the comments from block listener attached to login using google
-                      // BlocListener<AuthBloc, AuthState>(
-                      //   listener: (context,state){
-                      //     if(state is GoogleAuthenticationComplete){
-                      //       Navigator.pushNamed()
-                      //     }
-                      //   },
-                      //   child: ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                      //     onPressed: () {
-                      //       BlocProvider.of<AuthBloc>(context).add(GoogleAuthenticationEvent());
-                      //     },
-                      //     child: Row(
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         Image.asset(
-                      //           'assets/images/google_logo.png',
-                      //           height: 25,
-                      //           width: 25,
-                      //         ),
-                      //         const SizedBox(width: 10),
-                      //         const Text(
-                      //           'Sign In with Google',
-                      //           style: TextStyle(color: Colors.black),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // )
                     ],
                   )
                 : const SizedBox(width: 5),

@@ -1,7 +1,9 @@
 // import 'package:hive/hive.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:node_bb_application/business_logics/auth/auth_bloc.dart';
 import 'package:node_bb_application/business_logics/category/category_bloc.dart';
 import 'package:node_bb_application/presentation/screens/auth/login_page.dart';
 import 'package:node_bb_application/presentation/screens/auth/signup_page.dart';
@@ -20,11 +22,11 @@ void main() async {
   // Hive.registerAdapter(TripAdapter());
   // Hive.registerAdapter(UserAdapter());
   // Hive.registerAdapter(TransactionAdapter());
-  // // to lock the screen to portrait mode only
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitDown,
-  //   DeviceOrientation.portraitUp,
-  // ]);
+  // to lock the screen to portrait mode only
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<CategoryBloc>(create: (context) => CategoryBloc()),
+          BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
