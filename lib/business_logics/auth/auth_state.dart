@@ -13,15 +13,19 @@ class LoggingInState extends AuthState {
 }
 
 class LoginSuccessState extends AuthState {
-  final Map<String, dynamic> map;
-
-  LoginSuccessState(this.map);
+  final Map<String, dynamic> data;
+  LoginSuccessState({required this.data});
 
   @override
-  List<Object?> get props => [map];
+  List<Object?> get props => [data];
 }
 
 class UserNotFoundState extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UserAlreadyExist extends AuthState {
   @override
   List<Object?> get props => [];
 }
@@ -41,13 +45,10 @@ class SignUpState extends AuthState {
 }
 
 class SignUpSuccessState extends AuthState {
+  final Map<String, dynamic> data;
+  SignUpSuccessState({required this.data});
   @override
-  List<Object?> get props => [];
-}
-
-class UserFoundState extends AuthState {
-  @override
-  List<Object?> get props => [];
+  List<Object?> get props => [data];
 }
 
 class FailedToSignUpState extends AuthState {

@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class AuthRepository {
   String baseurl = 'https://krishna72480.nodebb.com/api/v3/';
@@ -11,33 +11,46 @@ class AuthRepository {
     String path = "utilities/login";
     // dio
     Uri uri = Uri.parse(baseurl + path);
-    Map<String, String> credentials = {"username": username, "password": password};
+    Map<String, String> credentials = {
+      "username": username,
+      "password": password
+    };
     var body = jsonEncode(credentials);
     var headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    http.Response response = await client.post(uri, body: body, headers: headers);
+    http.Response response =
+        await client.post(uri, body: body, headers: headers);
     var data = response.body;
     int statusCode = response.statusCode;
-    print(statusCode);
     return [data, statusCode];
   }
 
-  Future getSignUpResponse(String username, String password, String email) async {
+  Future getSignUpResponse(
+    String username, String password, String email) async {
     String path = "users";
     Uri uri = Uri.parse(baseurl + path);
-    Map<String, String> credentials = {"username": username, "password": password, "email": email, "_uid": "1"};
+    Map<String, String> credentials = {
+      "username": username,
+      "password": password,
+      "email": email,
+      "_uid": "1"
+    };
     var body = jsonEncode(credentials);
     var headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    http.Response response = await client.post(uri, body: body, headers: headers);
+    http.Response response = await post(
+      uri,
+      body: body,
+      headers: headers,
+    );
     var data = response.body;
     int statusCode = response.statusCode;
-    return [data, response.statusCode];
+    return [data, statusCode];
   }
 }

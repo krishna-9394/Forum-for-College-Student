@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:node_bb_application/business_logics/auth/auth_bloc.dart';
 import 'package:node_bb_application/presentation/screens/auth/signup_page.dart';
 import 'package:toast/toast.dart';

@@ -20,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           int statusCode = list[1];
           if (statusCode == 200) {
             Map<String, dynamic> data = jsonDecode(list[0]);
-            emit(LoginSuccessState(data["response"]));
+            emit(LoginSuccessState(data: data["response"]));
           } else {
             print("user not found");
             emit(UserNotFoundState());
@@ -28,17 +28,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } catch (error) {
           emit(FailedToLoginState(error: error.toString()));
         }
-      } else if (event is SignUp) {
+      } 
+      else if (event is SignUp) {
         emit(SignUpState());
         try {
           var list = await _authRepo.getSignUpResponse(event.username, event.password, event.email);
           int statusCode = list[1];
           if (statusCode == 200) {
             Map<String, dynamic> data = jsonDecode(list[0]);
-            emit(LoginSuccessState(data["response"]));
-          } else {
-            print("user not found");
-            emit(UserNotFoundState());
+            emit(SignUpSuccessState(data: data["response"]));
+          } else if(statusCode == 400) {
+            print("weak password");
+            emit(UserAlreadyExist());
           }
         } catch (error) {
           emit(FailedToLoginState(error: error.toString()));
