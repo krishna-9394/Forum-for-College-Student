@@ -9,11 +9,12 @@ class UsersInitial extends UsersState {
 
 class LoadedUsersData extends UsersState {
   final List<dynamic> map;
+  final bool hasReachedMax;
 
-  LoadedUsersData(this.map);
+  LoadedUsersData(this.hasReachedMax,this.map);
 
   @override
-  List<Object?> get props => [map];
+  List<Object?> get props => [hasReachedMax,map];
 }
 
 class LoadingUsersData extends UsersState {

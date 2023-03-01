@@ -18,5 +18,4 @@ class LoadingSingleUser extends UsersEvent {
   @override
   // TODO: implement props
   List<Object?> get props => [uid];
-
 }

@@ -57,8 +57,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // TODO 4: change the logo to app logo
-                            Image.network(
-                              "https://lh5.googleusercontent.com/uGOb6P_0AGqCgnznTSrOLnsl1z5rJkrwz0v3nlP6WGwQ_I3IfMqeoHhPxt2RrjgMLbo=w2400",
+                            Image.asset(
+                              'assets/images/nitk_logo.png',
                               height: 150,
                               width: 150,
                             ),
@@ -544,8 +544,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // TODO 4: change the logo to app logo
-                            Image.network(
-                              "https://lh5.googleusercontent.com/uGOb6P_0AGqCgnznTSrOLnsl1z5rJkrwz0v3nlP6WGwQ_I3IfMqeoHhPxt2RrjgMLbo=w2400",
+                             Image.asset(
+                              'assets/images/nitk_logo.png',
                               height: 150,
                               width: 150,
                             ),

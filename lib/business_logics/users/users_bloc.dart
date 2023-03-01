@@ -9,13 +9,18 @@ part 'users_state.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   UserRepo repo = UserRepo();
+  int pageIndex = 0;
 
   UsersBloc() : super(UsersInitial()) {
     on<LoadingUsers>((event, emit) async {
       emit(LoadingUsersData());
       try {
-        List<dynamic> map = await repo.getUsers();
-        emit(LoadedUsersData(map));
+        print("reached here in bloc $pageIndex");
+        var data = await repo.getUsers(pageIndex);
+        pageIndex++;
+        var map = data[0];
+        bool hasMaxReached = !data[1];
+        emit(LoadedUsersData(hasMaxReached, map));
       } catch (e) {
         emit(FailedToLoadUsersData(e.toString()));
       }

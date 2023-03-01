@@ -37,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
       },
       builder: (context, state) {
         if (state is DataFillingState) {
-          print("Fill the Data");
           return Scaffold(
             body: Form(
               key: widget._formKey,
@@ -192,6 +191,8 @@ class _LoginPageState extends State<LoginPage> {
                                 .primaryColor,
                           )),
                       onPressed: () async {
+                        // TODO2: remove navigator to make functioning of the app
+                         Navigator.pushNamed(context, CategoryList.id);
                         String name = widget.regEditor.text.trim();
                         String password = widget.passEditor.text.trim();
                         if (name.compareTo("") == 0) {
@@ -253,7 +254,6 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
         else if (state is LoggingInState) {
-          // showToast("Loading...");
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
