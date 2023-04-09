@@ -20,17 +20,3 @@ IRIS-NodeBB Forum was deployed to bring together the diverse interests, knowledg
 <img src="https://user-images.githubusercontent.com/97300688/216587372-5cdd4348-77e2-4e2b-8860-bda181a5b8ea.jpg" alt="DropMenu" width="250"/>\t\t
 <img src="https://user-images.githubusercontent.com/97300688/216587466-fe39cf8c-e9ed-4f3f-a7ff-76beda70654e.jpg" alt="UsersList" width="250"/>\t\t
 <img src="https://user-images.githubusercontent.com/97300688/216587512-27cb3131-334c-4906-98c6-54e809218d2e.jpg" alt="Profile" width="250"/>\n
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
